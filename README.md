@@ -1,66 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Biblioteca
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Gestión de Biblioteca Universitaria
 
-## About Laravel
+Este proyecto tiene como objetivo facilitar la administración y el uso de una biblioteca, proporcionando funcionalidades para la gestión de usuarios, libros, reservas, préstamos y más.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🧑‍🤝‍🧑 Niveles / Tipos de Usuarios
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Personal de Atención y Administración**: Administrativo, Bibliotecario
+- **Usuario Interno**: Lector (Estudiantes, Profesores)
+- **Usuario Externo**: Visitante
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🔒 Sistema de Acceso Cerrado
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Este sistema utiliza un **acceso restringido** donde solo los usuarios previamente creados en la base de datos pueden acceder. Los nuevos usuarios deben ser registrados por un administrador, ya sea directamente en el sistema o en la base de datos, y **no existe una página de registro de usuarios** para el público general. Los usuarios registrados tienen acceso a:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Consulta de información de libros**
+- **Realización de reservas de libros**
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🗄️ Estructura Inicial de la Base de Datos
 
-### Premium Partners
+### **Tabla: Usuarios (Users)**
+Define los usuarios generales de la biblioteca.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### **Tabla: Lectores (Readers)**
+| Campo         | Descripción                      |
+|---------------|----------------------------------|
+| Id            | Identificador único              |
+| Code          | Código o DNI                     |
+| Name          | Nombre                           |
+| Last Name     | Apellido                         |
+| Birth Date    | Fecha de Nacimiento              |
+| Nationality   | Nacionalidad                     |
+| Email         | Correo Electrónico               |
+| Phone         | Teléfono                         |
+| Address       | Dirección                        |
+| Document Type | Tipo de Documento (DNI, Pasaporte, etc) |
 
-## Contributing
+### **Tabla: Autores (Authors)**
+| Campo         | Descripción                      |
+|---------------|----------------------------------|
+| Id            | Identificador único              |
+| Name          | Nombre                           |
+| Last Name     | Apellido                         |
+| Birth Date    | Fecha de Nacimiento              |
+| Nationality   | Nacionalidad                     |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### **Tabla: Carreras (Careers)**
+| Campo         | Descripción |
+|---------------|-------------|
+| Id            | Identificador único |
+| Name          | Nombre de la Carrera |
 
-## Code of Conduct
+### **Tabla: Libros (Books)**
+| Campo           | Descripción                           |
+|-----------------|---------------------------------------|
+| Id              | Identificador único                   |
+| Code_Local      | Código Local                          |
+| Title           | Título                                |
+| Author_Id       | Clave Foránea de Autor                |
+| Publisher_Id    | Clave Foránea de Editorial            |
+| Published_Year  | Año de Publicación                    |
+| ISBN            | ISBN del libro                        |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### **Tabla: Editoriales (Publishers)**
+| Campo         | Descripción |
+|---------------|-------------|
+| Id            | Identificador único |
+| Name          | Nombre de la Editorial |
 
-## Security Vulnerabilities
+### **Tabla: Categorías (Categories)**
+| Campo         | Descripción |
+|---------------|-------------|
+| Id            | Identificador único |
+| Name          | Nombre de la Categoría |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### **Otras Tablas Importantes**
+- **Libros_Categorías (Books_Categories)**: Relación entre libros y categorías
+- **Descripciones (Descriptions)**: Información detallada de cada libro (resumen, sinopsis, número de páginas)
+- **Copias (Copies)**: Información de las copias de los libros y su disponibilidad
+- **Reservas (Reservations)**: Reservas de copias de libros realizadas por los lectores
+- **Préstamos (Loans)**: Información de los préstamos realizados y su estado
+- **Multas (Fines)**: Gestión de multas en caso de devoluciones tardías o perdidas
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🗂️ Enums y Valores Predeterminados
+
+### Roles
+- **Personal de Atención y Administración**: Administrativo, Bibliotecario
+
+### Tipos de Lectores
+- **Lector Interno**: Estudiantes y Profesores
+- **Lector Externo**: Visitantes
+
+### Estado de Libros
+- **Disponible**
+- **En Espera**
+- **Reservado**
+- **No Disponible**
+
+---
+
+## ⚙️ Estructura de la Aplicación
+
+La aplicación está organizada en cuatro capas principales:
+
+1. **Frontend**: Interfaz para los usuarios
+2. **Backend**: Lógica y control de operaciones
+3. **Base de Datos**: Almacenamiento de información
+4. **API**: Gestión de comunicación entre sistemas
+
+---
+
+## 🌟 Funcionalidades
+
+1. **Consulta de libros**
+2. **Reservas y préstamos de ejemplares**
+3. **Gestión de usuarios y roles**
+4. **Aplicación de multas por retrasos o pérdidas**
+
+--- 
+
+Este README está diseñado para ayudarte a comprender rápidamente la funcionalidad y estructura de la aplicación. ¡Esperamos que esta biblioteca sea una herramienta útil y fácil de usar! 📖✨
