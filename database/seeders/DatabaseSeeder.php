@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Book;
+use App\Models\Categorie;
+use App\Models\Description;
+use App\Models\Publisher;
+use App\Models\Reader;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +18,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // User::factory(3)->create();
 
-        User::factory()->create([
+        /* User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]); */
+
+        
+        $this->call([
+            AuthorsSeeder::class,
+            PublishersSeeder::class,
+            CategoriesSeeder::class,
+            BooksSeeder::class,
+            DescriptionsSeeder::class,
+            BookCategoriesSeeder::class,
+            UsersSeeder::class,
+            ReadersSeeder::class,
+            ExternalSeeder::class,
+            // Añade más seeders aquí
         ]);
     }
 }
