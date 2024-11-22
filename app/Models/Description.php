@@ -12,8 +12,10 @@ class Description extends Model
     protected $table = 'descriptions';
     protected $fillable = [
         'book_id',
+        'language',
+        'temes',
         'summary',
-        'synopsis',
+        'content',
         'number_of_pages',
     ];
 }

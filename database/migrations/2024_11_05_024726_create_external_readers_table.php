@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('external_readers', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->date('birth_date');
-            $table->string('nationality');
-            $table->string('email')->unique();
-            $table->string('phone');
-            $table->string('address')->nullable();
+            $table->string('CI')->unique(); // Código de identificación
+            $table->string('first_name'); // Nombre
+            $table->string('last_name'); // Apellido
+            $table->date('birth_date'); // Fecha de nacimiento
+            $table->string('nationality'); // Nacionalidad
+            $table->string('email')->unique(); // Correo electrónico
+            $table->string('phone'); // Teléfono
+            $table->string('address')->nullable(); // Dirección
             $table->timestamps();
         });
     }

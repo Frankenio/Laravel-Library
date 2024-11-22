@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('copy_id');
-            $table->foreignId('reader_id');
-            $table->date('reservation_date');
-            $table->date('expiration_date');
-            $table->string('status');
+            $table->foreignId('book_id'); // Libro reservado
+            $table->foreignId('reader_id'); // Lector que reserva
+            $table->date('reservation_date'); // Fecha de reserva
+            $table->date('expiration_date'); // Fecha de vencimiento
+            $table->string('status'); // Estado de la reserva
             $table->timestamps();
 
-            $table->foreign('copy_id')->references('id')->on('copies')
+            $table->foreign('book_id')->references('id')->on('books')
             ->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('reader_id')->references('id')->on('readers')
             ->cascadeOnUpdate()->cascadeOnDelete();

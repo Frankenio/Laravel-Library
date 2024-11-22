@@ -1,18 +1,21 @@
-
 <?php
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 
-class CatalogController extends Controller
+class CatalogueController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar el catálogo para los lectores.
      */
     public function index()
     {
-        return "Hello World";
+        // Obtener todos los libros para los lectores
+        $books = Book::all();
+
+        return view('clients.index', compact('books')); // Vista del cliente
     }
 
     /**

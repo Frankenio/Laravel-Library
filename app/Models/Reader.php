@@ -11,7 +11,7 @@ class Reader extends Model
     use HasFactory;
     protected $table = 'readers';
     protected $fillable = [
-        'code',
+        'CI',
         'first_name',
         'last_name',
         'birth_date',

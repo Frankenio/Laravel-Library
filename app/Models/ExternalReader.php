@@ -11,7 +11,7 @@ class ExternalReader extends Model
     use HasFactory;
     protected $table = 'external_readers';
     protected $fillable = [
-        'code',
+        'CI',
         'first_name',
         'last_name',
         'birth_date',

@@ -59,7 +59,8 @@
                                     <a href="#nosotros" class="text-lg font-medium text-slate-700 duration-200 hover:text-blue-600 lg:text-base">Sobre Nosotros</a>
                                 </li>
                                 <li>
-                                    <a href="#" @click.prevent="open = true" class="text-lg font-medium text-slate-700 duration-200 hover:text-blue-600 lg:text-base">Catalogo</a>
+                                    {{-- <a href="#" @click.prevent="open = true" class="text-lg font-medium text-slate-700 duration-200 hover:text-blue-600 lg:text-base">Catalogo</a> --}}
+                                    <a href="{{ route('catalogue.index') }}" class="text-lg font-medium text-slate-700 duration-200 hover:text-blue-600 lg:text-base">Catalogo</a>
                                 </li>
                                 <li>
                                     <a href="#contacto" class="text-lg font-medium text-slate-700 duration-200 hover:text-blue-600 lg:text-base">Contacto</a>
@@ -84,7 +85,7 @@
         </header>
         <!-- ====== END header ====== -->
 
-
+        <main>
         <!-- ====== hero ====== -->
 
         <section class="relative bg-white py-16 lg:pt-[100px]">
@@ -130,112 +131,142 @@
         <div x-show="open" x-transition.opacity.duration.300ms class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative mx-4" @click.away="open = false">
                 <button @click="open = false" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">&times;</button>
-            <h2 class="text-2xl font-semibold mb-4 text-center">Iniciar Sesión</h2>
-            <form>
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                    <input type="email" id="email" class="mt-1 px-4 py-2 border rounded-md w-full" placeholder="nombre.apellido@sistemas.edu.bo" required>
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                    <input type="password" id="password" class="mt-1 px-4 py-2 border rounded-md w-full" placeholder="CI+SISinf" required>
-                </div>
-                <div class="flex justify-end">
-                    <button type="button" @click="open = false" class="px-4 py-2 mr-2 bg-gray-300 rounded-lg hover:bg-gray-400">Cancelar</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Ingresar</button>
-                </div>
-            </form>
+                <h2 class="text-2xl font-semibold mb-4 text-center">Iniciar Sesión</h2>
+                <form>
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                        <input type="email" id="email" class="mt-1 px-4 py-2 border rounded-md w-full" placeholder="nombre.apellido@sistemas.edu.bo" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                        <input type="password" id="password" class="mt-1 px-4 py-2 border rounded-md w-full" placeholder="CI+SISinf" required>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" @click="open = false" class="px-4 py-2 mr-2 bg-gray-300 rounded-lg hover:bg-gray-400">Cancelar</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Ingresar</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <!-- ====== End ventana emergente de autenticación para el catalogo ====== -->
 
-        <!-- ====== END manual ====== -->
 
-    </div>
-
-        <!-- ====== FAQ ====== -->
-
-        <section id="manual" class="py-16">
+        <!-- ====== MANUAL ====== -->
+        <section id="manual" class="py-16 bg-gray-50">
             <div class="mx-auto max-w-7xl px-8 md:px-6">
-                <!-- heading text -->
+                <!-- Heading text -->
                 <div class="mb-5 sm:mb-10">
-                    <span class="font-medium text-blue-500">Our FAQ</span>
-                    <h1 class="text-2xl font-bold text-slate-700 sm:text-3xl">Frequently Asked Questions</h1>
+                    <span class="font-medium text-blue-500">Manual de Usuario</span>
+                    <h1 class="text-2xl font-bold text-slate-700 sm:text-3xl">
+                        ¿Cómo utilizar el sistema de la biblioteca?
+                    </h1>
                 </div>
-                    <!-- wrapper -->
-                    <div class="md:flex md:justify-between md:gap-6">
-                        <div class="mb-8 flex justify-center md:mb-0 md:w-5/12">
-                            <img src="images/faq.png" alt="faq images" class="max-h-[500px] md:max-h-max">
+                <!-- Wrapper -->
+                <div class="md:flex md:justify-between md:gap-6">
+                    <div class="mb-8 flex justify-center md:mb-0 md:w-5/12">
+                        <img src="images/templo.png" alt="Manual" class="max-h-[500px] md:max-h-max">
+                    </div>
+                    <div class="md:w-6/12">
+                        <div x-data="{selected:1}">
+                            <ul>
+                                <!-- Instrucción para estudiantes y docentes -->
+                                <li class="relative mb-5">
+                                    <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left"
+                                        @click="selected !== 1 ? selected = 1 : selected = null">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-slate-600">
+                                                ¿Cómo realizar reservas y préstamos de libros?
+                                            </h4>
+                                            <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
+                                        </div>
+                                    </button>
+                                    <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500"
+                                        x-ref="container1"
+                                        x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                        <div class="p-6">
+                                            <p class="text-slate-500">
+                                                Los estudiantes y docentes pueden realizar **reservas de libros** desde su perfil en el sistema. Una vez reservados, deben recogerlos en la biblioteca dentro del tiempo especificado. También pueden solicitar préstamos directamente a través del sistema o en ventanilla.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Instrucción para lectores externos -->
+                                <li class="relative mb-5">
+                                    <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left"
+                                        @click="selected !== 2 ? selected = 2 : selected = null">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-slate-600">
+                                                ¿Qué servicios están disponibles para lectores externos?
+                                            </h4>
+                                            <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
+                                        </div>
+                                    </button>
+                                    <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500"
+                                        x-ref="container2"
+                                        x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
+                                        <div class="p-6">
+                                            <p class="text-slate-500">
+                                                Los lectores externos solo pueden solicitar préstamos a través de ventanilla presentando la documentación requerida. No tienen acceso a realizar reservas en línea ni a utilizar otras funcionalidades avanzadas del sistema.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Plazos y reglas generales -->
+                                <li class="relative mb-5">
+                                    <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left"
+                                        @click="selected !== 3 ? selected = 3 : selected = null">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-slate-600">
+                                                ¿Cuáles son los plazos y reglas para préstamos?
+                                            </h4>
+                                            <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
+                                        </div>
+                                    </button>
+                                    <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500"
+                                        x-ref="container3"
+                                        x-bind:style="selected == 3 ? 'max-height: ' + $refs.container3.scrollHeight + 'px' : ''">
+                                        <div class="p-6">
+                                            <p class="text-slate-500">
+                                                Los préstamos tienen plazos definidos según el tipo de lector:
+                                                <ul class="list-disc pl-5 text-slate-500" >
+                                                    <li>Estudiantes: 7 días con posibilidad de renovación.</li>
+                                                    <li>Docentes: 14 días con posibilidad de renovación.</li>
+                                                    <li>Lectores externos: 3 días sin renovación.</li>
+                                                </ul>
+                                                Los materiales deben devolverse en las condiciones prestadas; de lo contrario, podrían generarse multas.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Multas y devoluciones -->
+                                <li class="relative mb-5">
+                                    <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left"
+                                        @click="selected !== 4 ? selected = 4 : selected = null">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-slate-600">
+                                                ¿Qué pasa si no devuelvo un libro a tiempo?
+                                            </h4>
+                                            <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
+                                        </div>
+                                    </button>
+                                    <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500"
+                                        x-ref="container4"
+                                        x-bind:style="selected == 4 ? 'max-height: ' + $refs.container4.scrollHeight + 'px' : ''">
+                                        <div class="p-6">
+                                            <p class="text-slate-500">
+                                                Si no devuelves un libro dentro del plazo establecido, se aplicará una multa diaria de acuerdo con la normativa vigente. Las multas deben pagarse antes de realizar un nuevo préstamo o reserva.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-
-                        <div class="md:w-6/12">
-                            <div class="" x-data="{selected:1}">
-                                <ul>
-                                    <li class="relative mb-5">
-                                        <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left" @click="selected !== 1 ? selected = 1 : selected = null">
-                                            <div class="flex items-center justify-between">
-                                                <h4 class="font-medium text-slate-600">Lorem ipsum dolor sit, amet consectetur?</h4>
-                                                <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
-                                            </div>
-                                        </button>
-
-                                        <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
-                                            <div class="p-6">
-                                                <p class="text-slate-500">ipsum! Assumenda, dolorem nihil. Commodi, qui? Officiis provident, cumque perspiciatis magni commodi rem nihil,</p>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="relative mb-5">
-                                        <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left" @click="selected !== 2 ? selected = 2 : selected = null">
-                                            <div class="flex items-center justify-between">
-                                                <h4 class="font-medium text-slate-600">Lorem ipsum dolor sit, amet consectetur?</h4>
-                                                <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
-                                            </div>
-                                        </button>
-
-                                        <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500" x-ref="container2" x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
-                                            <div class="p-6">
-                                                <p class="text-slate-500">ipsum! Assumenda, dolorem nihil. Commodi, qui? Officiis provident, cumque perspiciatis magni commodi rem nihil,</p>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="relative mb-5">
-                                        <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left" @click="selected !== 3 ? selected = 3 : selected = null">
-                                            <div class="flex items-center justify-between">
-                                                <h4 class="font-medium text-slate-600">Lorem ipsum dolor sit, amet consectetur?</h4>
-                                                <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
-                                            </div>
-                                        </button>
-
-                                        <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500" x-ref="container3" x-bind:style="selected == 3 ? 'max-height: ' + $refs.container3.scrollHeight + 'px' : ''">
-                                            <div class="p-6">
-                                                <p class="text-slate-500">ipsum! Assumenda, dolorem nihil. Commodi, qui? Officiis provident, cumque perspiciatis magni commodi rem nihil,</p>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="relative mb-5">
-                                        <button type="button" class="w-full rounded-lg bg-blue-50 px-8 py-6 text-left" @click="selected !== 4 ? selected = 4 : selected = null">
-                                            <div class="flex items-center justify-between">
-                                                <h4 class="font-medium text-slate-600">Lorem ipsum dolor sit, amet consectetur?</h4>
-                                                <ion-icon name="chevron-down-circle-outline" class="w-8 text-lg text-blue-500"></ion-icon>
-                                            </div>
-                                        </button>
-
-                                        <div class="relative max-h-0 overflow-hidden rounded-b-lg bg-blue-50/30 transition-all duration-500" x-ref="container4" x-bind:style="selected == 4 ? 'max-height: ' + $refs.container4.scrollHeight + 'px' : ''">
-                                            <div class="p-6">
-                                                <p class="text-slate-500">ipsum! Assumenda, dolorem nihil. Commodi, qui? Officiis provident, cumque perspiciatis magni commodi rem nihil,</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+        <!-- ====== END MANUAL ====== -->
 
-        <!-- ====== END FAQ ====== -->
 
         <!-- ====== about ====== -->
 
@@ -291,7 +322,7 @@
 
 
 <!-- ====== Contact ====== -->
-<section id="contacto" class="relative overflow-hidden py-16">
+<section id="contacto" class="relative overflow-hidden py-16"  >
     <img src="images/effect.png" alt="effect" class="absolute bottom-[-400px] -z-10 w-full opacity-[0.2]">
     <div class="mx-auto max-w-7xl px-8 md:px-6">
         <div class="-mx-4 flex flex-wrap lg:justify-between">
@@ -363,6 +394,7 @@
     </div>
 </section>
 <!-- ====== END Contact ====== -->
+</main>
 <!-- ====== Footer ====== -->
 <footer class="bg-blue-900 text-white py-6">
     <div class="container mx-auto text-center">

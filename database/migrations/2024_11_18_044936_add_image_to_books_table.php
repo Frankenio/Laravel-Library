@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('careers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); // Nombre
-            $table->timestamps();
+        Schema::table('books', function (Blueprint $table) {
+            $table->string('image')->nullable()->after('isbn'); // Campo para almacenar la ruta de la imagen
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('careers');
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropColumn('image');
+        });
     }
 };

@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('descriptions', function (Blueprint $table) {
             $table->foreignId('book_id')->primary();
-            $table->string('summary');
-            $table->text('synopsis');
-            $table->integer('number_of_pages');
+            $table->string('language'); // Idioma
+            $table->string('temes'); // Temas
+            $table->string('summary'); // Resumen
+            $table->text('content'); // Contenido
+            $table->integer('number_of_pages'); // Número de páginas
             $table->timestamps();
 
             $table->foreign('book_id')->references('id')->on('books')

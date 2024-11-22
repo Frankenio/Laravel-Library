@@ -13,6 +13,13 @@ class BookController extends Controller
         $books = Book::all();
         return view('books.index', compact('books'));
     }
+    // Mostrar un libro individual
+    public function show($id)
+    {
+        $book = Book::with('author')->findOrFail($id);
+        return view('books.show', compact('book'));
+    }
+
 
     // Mostrar formulario para crear un libro
     public function create()
@@ -20,19 +27,24 @@ class BookController extends Controller
         return view('books.create');
     }
 
-    // Almacenar un nuevo libro
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'isbn' => 'required|string|unique:books',
-        ]);
+{
 
-        Book::create($request->all());
 
-        return redirect()->route('books.index');
+    // Guardar la imagen si se sube
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('books', 'public');
     }
+
+    // Crear el libro con autor_id
+    Book::create([
+        'title' => $request->input('title'),
+        'image' => $imagePath ?? null,  // Guardar la ruta de la imagen o null si no se sube
+    ]);
+
+    return redirect()->route('books.index');
+}
+
 
     // Mostrar formulario para editar un libro
     public function edit(Book $book)

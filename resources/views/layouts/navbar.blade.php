@@ -4,7 +4,7 @@
             <img src="{{ asset('assets/img/user01.png') }}" alt="user-picture" class="img-responsive img-circle center-box">
         </figure>
         <li style="color:#fff; cursor:default;">
-            <span class="all-tittles">{{ Auth::user()->role }}</span>
+            {{-- <span class="all-tittles">{{ Auth::user()->role }}</span> --}}
         </li>
         <li class="tooltips-general exit-system-button" data-placement="bottom" title="Salir del sistema">
             <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -12,7 +12,7 @@
             </form>
                 <i class="zmdi zmdi-power"></i>
         </li>
-            
+
         {{-- <li class="tooltips-general btn-help" data-placement="bottom" title="Ayuda">
             <i class="zmdi zmdi-help-outline zmdi-hc-fw"></i>
         </li> --}}

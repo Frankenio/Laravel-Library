@@ -11,10 +11,15 @@ class Book extends Model
     use HasFactory;
     protected $table = 'books';
     protected $fillable = [
+        'code_local',
         'title',
         'author_id',
         'publisher_id',
         'published_year',
+        'category_id',
         'isbn',
+        'shelf_number',
+        'status',
+        'image',
     ];
 }

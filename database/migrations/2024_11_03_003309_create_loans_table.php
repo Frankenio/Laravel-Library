@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reader_id');
-            $table->foreignId('copy_id');
-            $table->date('loan_date');            
-            $table->date('return_date');
-            $table->string('status');
+            $table->foreignId('reader_id'); // Lector a quien presta
+            $table->foreignId('book_id'); // Libro a prestar
+            $table->date('loan_date'); // Fecha de préstamo
+            $table->date('return_date'); // Fecha de devolución
+            $table->string('status'); // Estado del préstamo
             $table->timestamps();
 
-            $table->foreign('copy_id')->references('id')->on('copies')
+            $table->foreign('book_id')->references('id')->on('books')
             ->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('reader_id')->references('id')->on('readers')            
+            $table->foreign('reader_id')->references('id')->on('readers')
             ->cascadeOnUpdate()->cascadeOnDelete();
         });
     }

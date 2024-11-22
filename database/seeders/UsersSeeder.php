@@ -16,7 +16,7 @@ class UsersSeeder extends Seeder
     {
         $users = [
             [
-                'DNI' => fake()->unique()->numerify('########'),
+                'CI' => fake()->unique()->numerify('########'),
                 'name' => 'Benjamín',
                 'email' => 'benjamin@gmail.com',
                 'phone' => fake()->numerify('7#######'),
@@ -25,9 +25,9 @@ class UsersSeeder extends Seeder
                 'role' => Role::Administrador,
             ],
             [
-                'DNI' => fake()->unique()->numerify('########'),
-                'name' => 'Juan',
-                'email' => 'juan@gmail.com',
+                'CI' => fake()->unique()->numerify('########'),
+                'name' => 'Alain',
+                'email' => 'alain@gmail.com',
                 'phone' => fake()->numerify('7#######'),
                 'address' => fake()->address(),
                 'password' => bcrypt(123),

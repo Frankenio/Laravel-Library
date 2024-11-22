@@ -22,3 +22,4 @@ Route::middleware('auth')->group(function () {
     // Eliminar un lector
     Route::delete('/readers/{reader}', [ReaderController::class, 'destroy'])->name('readers.destroy');
 });
+
