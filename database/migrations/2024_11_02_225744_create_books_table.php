@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -16,21 +15,18 @@ return new class extends Migration
             $table->id();
             $table->string('code_local')->unique(); // Código local
             $table->string('title'); // Título
-            $table->foreignId('author_id')->nullable(); // Autor
-            $table->foreignId('publisher_id')->nullable(); // Editorial
-            $table->integer('published_year')->nullable(); // Año de publicación
-            $table->foreignId('category_id')->nullable(); // Categoría
-            $table->bigInteger('isbn')->unsigned()->unique()->nullable(); // ISBN (11 dígitos)
-            $table->integer('shelf_number')->nullable(); // Número de estantería
-            $table->string('status'); // Estado
+            $table->year('published_year')->nullable(); // Año de publicación (sin unsigned)
+            $table->string('isbn', 20)->nullable()->unique(); // ISBN (sin unsigned)
+            $table->string('type'); // Tipo (Libro, Tesis, Proyecto, Trabajos)
+            $table->unsignedInteger('shelf_number')->nullable(); // Número de estantería (unsigned, ya que es un número)
+            $table->string('status'); // Estado (Disponible, Prestado, Reservado)
+            $table->string('publisher')->nullable(); // Editorial
+            $table->string('language')->nullable(); // Idioma
+            $table->unsignedInteger('pages')->nullable(); // Páginas (con unsigned, para garantizar valores positivos)
+            $table->enum('academic_level', ['Introducción', 'Intermedio', 'Avanzado'])->nullable(); // Nivel académico
+            $table->string('supplier')->nullable(); // Proveedor (Particular, Donacion, Compra, etc.)
+            $table->text('description')->nullable(); // Descripción Contenido
             $table->timestamps();
-
-            $table->foreign('author_id')->references('id')->on('authors')
-            ->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('publisher_id')->references('id')->on('publishers')
-            ->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('category_id')->references('id')->on('categories')
-            ->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

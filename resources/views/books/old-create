@@ -1,0 +1,140 @@
+<x-app-layout>
+    <div x-data="bookCatalogApp()">
+        <div class="container mx-auto p-6">
+            <h1 class="text-3xl font-semibold text-gray-700 mb-6">Agregar Nuevo Libro</h1>
+
+            <!-- Formulario de Libro -->
+            <form @submit.prevent="submitForm" action="{{ route('books.store') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Código Local -->
+                    <div>
+                        <label for="code_local" class="block text-sm font-medium text-gray-600">Código Local</label>
+                        <input type="text" id="code_local" x-model="form.code_local" name="code_local" class="mt-2 w-full p-2 border rounded-lg" required>
+                    </div>
+
+                    <!-- Título del libro -->
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-600">Título del libro</label>
+                        <input type="text" id="title" x-model="form.title" name="title" class="mt-2 w-full p-2 border rounded-lg" required>
+                    </div>
+
+                    <!-- Año de publicación -->
+                    <div>
+                        <label for="published_year" class="block text-sm font-medium text-gray-600">Año de publicación</label>
+                        <input type="number" id="published_year" x-model="form.published_year" name="published_year" class="mt-2 w-full p-2 border rounded-lg" required>
+                    </div>
+
+                    <!-- ISBN -->
+                    <div>
+                        <label for="isbn" class="block text-sm font-medium text-gray-600">ISBN</label>
+                        <input type="text" id="isbn" x-model="form.isbn" name="isbn" class="mt-2 w-full p-2 border rounded-lg">
+                    </div>
+
+                    <!-- Tipo de libro -->
+                    <div>
+                        <label for="type" class="block text-sm font-medium text-gray-600">Tipo de libro</label>
+                        <select id="type" x-model="form.type" name="type" class="mt-2 w-full p-2 border rounded-lg" required>
+                            <option value="Libro">Libro</option>
+                            <option value="Tesis">Tesis</option>
+                            <option value="Proyecto">Proyecto</option>
+                            <option value="Trabajo">Trabajo</option>
+                        </select>
+                    </div>
+
+                    <!-- Estado del libro -->
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-600">Estado</label>
+                        <select id="status" x-model="form.status" name="status" class="mt-2 w-full p-2 border rounded-lg" required>
+                            <option value="Disponible">Disponible</option>
+                            <option value="Prestado">Prestado</option>
+                            <option value="Reservado">Reservado</option>
+                        </select>
+                    </div>
+
+                    <!-- Autores -->
+                <div>
+                    <label for="authors" class="block text-sm font-medium text-gray-600">Autores</label>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" @click="toggleAuthorsModal" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Seleccionar Autores</button>
+                        <button type="button" @click="toggleCreateAuthorModal" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Nuevo Autor</button>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600">
+                        <ul>
+                            <template x-for="author in form.authors" :key="author.id">
+                                <li x-text="author.name"></li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+
+                    <!-- Categorías -->r
+                    <div>
+                        <label for="categories" class="block text-sm font-medium text-gray-600">Categorías</label>
+                        <button type="button" @click="toggleCategoriesModal" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Seleccionar Categorías</button>
+                        <div class="mt-2 text-sm text-gray-600">
+                            <ul>
+                                <template x-for="category in form.categories" :key="category.id">
+                                    <li x-text="category.name"></li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                        Agregar Libro
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modales para Autores y Categorías -->
+        @include('books.modals.authors')
+        @include('books.modals.categories')
+        @include('books.modals.create_author')
+        @include('books.modals.create_category')
+    </div>
+
+    <script>
+        function bookCatalogApp() {
+            return {
+                form: {
+                    code_local: '',
+                    title: '',
+                    published_year: '',
+                    isbn: '',
+                    type: 'Libro',
+                    status: 'Disponible',
+                    authors: [],
+                    categories: [],
+                },
+                authorsList: @json(App\Models\Author::all()),
+                categoriesList: @json(App\Models\Categorie::all()),
+
+                toggleAuthorsModal() {
+                    this.isAuthorsModalOpen = !this.isAuthorsModalOpen;
+                },
+
+                toggleCategoriesModal() {
+                    this.isCategoriesModalOpen = !this.isCategoriesModalOpen;
+                },
+
+                toggleCreateAuthorModal() {
+                    this.isCreateAuthorModalOpen = !this.isCreateAuthorModalOpen;
+                },
+
+                toggleCreateCategoryModal() {
+                    this.isCreateCategoryModalOpen = !this.isCreateCategoryModalOpen;
+                },
+
+                submitForm() {
+                    this.$refs.form.submit();
+                }
+            }
+        }
+    </script>
+
+</x-app-layout>

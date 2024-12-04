@@ -1,63 +1,40 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    x-data="{ currentPage: 'dashboard', isCollapsed: false }">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') - Biblioteca</title>
 
-    <!-- Styles -->
+    <!-- favicon link -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/sweet-alert.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/material-design-iconic-font.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/sweet-alert.min.js') }}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>
-        window.jQuery || document.write('<script src="{{ asset('js/jquery-1.11.2.min.js') }}"><\/script>')
-    </script>
-    <script src="{{ asset('js/modernizr.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-
-    @vite(['resources/js/app.js'])
+    @endif
 
 </head>
-<body>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        @include('layouts.sidebar')
 
-    <div class="min-h-screen bg-gray-100">
-        <!-- Navbar Horizontal -->
-        @include('layouts.navbar-horizontal')
-
-        <!-- Contenedor de la página -->
-        <div class="content-page-container full-reset custom-scroll-containers">
-            <!-- Navbar Vertical -->
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
             @include('layouts.navbar')
-
-            <!-- Encabezado de la página -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Contenido de la página -->
-            {{ $slot }}
-
-            <!-- Footer -->
-            @include('layouts.footer')
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+                {{ $slot }}
+            </main>
         </div>
-    </div>
 </body>
 </html>

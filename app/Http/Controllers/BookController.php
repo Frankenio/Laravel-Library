@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -24,26 +26,34 @@ class BookController extends Controller
     // Mostrar formulario para crear un libro
     public function create()
     {
-        return view('books.create');
+        // Obtener todos los autores disponibles
+        $authors = Author::all();
+        $categories = Categorie::all(); // Si tienes categorías para mostrar
+
+        return view('books.create', compact('authors', 'categories'));
     }
 
     public function store(Request $request)
-{
+    {
+        // Validación
+        $request->validate([
+            'title' => 'required',
+            'code_local' => 'required|unique:books',
+            'authors' => 'required|array',
+        ]);
 
+        // Crear el libro
+        $book = Book::create($request->only([
+            'code_local', 'title', 'published_year', 'isbn', 'type', 'shelf_number',
+            'status', 'publisher', 'language', 'pages', 'academic_level', 'supplier', 'description'
+        ]));
 
-    // Guardar la imagen si se sube
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('books', 'public');
+        // Guardar autores seleccionados
+        $book->authors()->attach($request->authors);
+
+        // Redirigir a la página de libros o mostrar un mensaje de éxito
+        return redirect()->route('books.index')->with('success', 'Libro agregado exitosamente.');
     }
-
-    // Crear el libro con autor_id
-    Book::create([
-        'title' => $request->input('title'),
-        'image' => $imagePath ?? null,  // Guardar la ruta de la imagen o null si no se sube
-    ]);
-
-    return redirect()->route('books.index');
-}
 
 
     // Mostrar formulario para editar un libro

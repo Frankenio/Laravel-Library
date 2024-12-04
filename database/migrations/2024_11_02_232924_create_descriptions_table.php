@@ -12,16 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('descriptions', function (Blueprint $table) {
-            $table->foreignId('book_id')->primary();
+            $table->id();
             $table->string('language'); // Idioma
             $table->string('temes'); // Temas
-            $table->string('summary'); // Resumen
+            // $table->string('summary'); // Resumen
             $table->text('content'); // Contenido
             $table->integer('number_of_pages'); // Número de páginas
             $table->timestamps();
 
-            $table->foreign('book_id')->references('id')->on('books')
-            ->cascadeOnUpdate()->cascadeOnDelete();
+            // $table->foreignId('book_id');
+            // $table->foreign('book_id')->references('id')->on('books')
+            // ->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

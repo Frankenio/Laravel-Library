@@ -27,12 +27,12 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            AuthorsSeeder::class,
-            PublishersSeeder::class,
-            CategoriesSeeder::class,
+            // AuthorsSeeder::class,
+            // PublishersSeeder::class,
+            // CategoriesSeeder::class,
             UsersSeeder::class,
-            ReadersSeeder::class,
-            ExternalSeeder::class,
+            // ReadersSeeder::class,
+            // ExternalSeeder::class,
             // Añade más seeders aquí
         ]);
     }
